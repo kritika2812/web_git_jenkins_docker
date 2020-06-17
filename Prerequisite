@@ -1,0 +1,7 @@
+1. Docker Installed and Configured on Your VM.
+2. httpd image downloaded on your system from Hubdocker.com.
+3. Jenkins Installed and Setup on Your System.
+4. Configure Sudo Privileges to Jenkins.
+3. Git bash Installed on Your System
+4. ngrok ( to create a tunnel for network to connect IP’s outside the Private Network to local running service ).
+5. Create Empty and Un-Initialized Github Repository.
