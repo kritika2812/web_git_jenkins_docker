@@ -1,0 +1,56 @@
+In GIT BASH
+create one file in html named as index.html . commit it to the github.
+Then make another branch named as dev1 by the command->  git checkout dev1
+make some changes to that html file (index.html) and commit it to the github.
+
+
+
+In rhel8 
+firstly,start the services of jenkins: systemctl start jenkins and port number of jenkins is 8080.
+make one directory : mkdir project_environment
+                     cd project_environment
+                     mkdir master
+                     mkdir development
+ these directory we will link to lauch our container in which our website runs.
+ 
+ 
+ 
+ open the jenkins in chrome 
+ In job1 : Automating Job 1, to fetch the data from the “master” branch and will launch the “Production Environment” on docker 
+ click on new item name as job1. paste your project github url. 
+ After Clicking on Execute shell, one box will appear, paste the following code in it.
+ sudo cp -v * /root/project_environment/master
+ if sudo docker ps | grep  myos
+ then
+ echo "already running"
+ else 
+ sudo docker run -dit -p 8082:80 -v /root/project_environment/master:/usr/local/apache2/htdocs/ --name myos httpd
+ fi
+ 
+ In build triggers , write */master and click on trigger only if build is stable.
+ 
+ 
+ 
+ 
+ In job 2 : Automating Job 2, to fetch the data from the “development” branch and will launch the Testing Environment” on docker with our Web-Application Running.
+ set Branch Specifier as “origin/dev1”.
+ sudo cp -v * /root/project_environment/master
+ if sudo docker ps | grep  myweb
+ then
+ echo "already running"
+ else 
+ sudo docker run -dit -p 8083:80 -v /root/project_environment/development:/usr/local/apache2/htdocs/ --name myweb httpd
+ fi
+ 
+ 
+ In job3 : create new item name as merge_jobs. then, click on Add in front of Credentials.Enter your github account credentials.
+ set Branch Specifier as “*/dev1”.Click on Add button in front of Add Behaviour , select Merge Before Build.
+ Click on Add post-build action in Post-build Actions. Click on Save.
+ 
+ 
+ 
+
+ 
+ 
+ 
+ 
